@@ -3,10 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Pages</title>
+    <title>Markdownエディタ</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; height: 100vh; margin: 0; }
+        textarea, #preview { width: 50%; height: 100vh; padding: 10px; box-sizing: border-box; }
+        textarea { border-right: 1px solid #ddd; }
+        #preview { overflow-y: auto; background: #f9f9f9; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My GitHub Page!</h1>
-    <p>This is a simple homepage hosted with GitHub Pages.</p>
+    <textarea id="editor" placeholder="ここにMarkdownを入力"></textarea>
+    <div id="preview"></div>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+
+        editor.addEventListener('input', () => {
+            const rawMarkdown = editor.value;
+            const html = marked.parse(rawMarkdown);
+            preview.innerHTML = DOMPurify.sanitize(html);
+        });
+    </script>
 </body>
 </html>
